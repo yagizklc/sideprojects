@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title.name }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        .movie-detail {
+            display: flex;
+            margin: 30px 0;
+            gap: 30px;
+        }
+
+        .movie-detail img {
+            max-width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .movie-info {
+            flex: 1;
+        }
+
+        .movie-info p {
+            margin-bottom: 10px;
+        }
+
+        .home-btn {
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .home-btn:hover {
+            background-color: #45a049;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>{{ title.name }}</h1>
+
+    <div class="navigation">
+        <a href="{{ url_for('home') }}" class="home-btn">Return to Home</a>
+        <a href="{{ url_for('titles') }}" class="home-btn">Back to Movies</a>
+    </div>
+
+    <div class="movie-detail">
+        <img src="{{ title.image }}" alt="{{ title.name }}">
+        <div class="movie-info">
+            <p><strong>Year:</strong> {{ title.release_date }}</p>
+            <p><strong>Director:</strong> {{ title.director }}</p>
+            <p><strong>Description:</strong> {{ title.description }}</p>
+            <a href="{{ url_for('player') }}?q=sample.mp4" class="home-btn">Watch Movie</a>
+        </div>
+    </div>
+</body>
+
+</html>

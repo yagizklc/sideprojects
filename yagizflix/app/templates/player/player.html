@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+        }
+
+        h1 {
+            color: #f0f0f0;
+            text-align: center;
+        }
+
+        .video-container {
+            width: 100%;
+            margin: 30px 0;
+        }
+
+        video {
+            width: 100%;
+            max-height: 70vh;
+            border-radius: 8px;
+            background-color: #000;
+        }
+
+        .home-btn {
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .home-btn:hover {
+            background-color: #45a049;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Video Player</h1>
+
+    <div class="navigation">
+        <a href="{{ url_for('home') }}" class="home-btn">Return to Home</a>
+        <a href="{{ url_for('titles') }}" class="home-btn">Browse Movies</a>
+    </div>
+
+    <div class="video-container">
+        <video controls autoplay>
+            <source src="{{ url_for('stream') }}?q={{ video_file }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="navigation">
+        <a href="{{ url_for('player') }}?q={{ next }}" class="home-btn">Next</a>
+        <a href="{{ url_for('player') }}?q={{ previous }}" class="home-btn">Previous</a>
+    </div>
+</body>
+
+</html>

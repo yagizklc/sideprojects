@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Categories</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/movies.css') }}">
+    <style>
+        .home-btn {
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            display: inline-block;
+            margin: 20px 0;
+        }
+
+        .home-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Movie Categories</h1>
+    <a href="{{ url_for('home') }}" class="home-btn">Return to Home</a>
+
+    {% for tag, titles in titles_by_tag.items() %}
+    <div class="category">
+        <h2>{{ tag }}</h2>
+        <div class="movie-list">
+            {% for title in titles %}
+            <div class="movie-card" hx-get="/titles/{{ title.id }}" hx-trigger="click">
+                <img class="movie-image" src="{{ title.image }}" alt="{{ title.name }}">
+                <div class="movie-title">{{ title.name }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</body>
+
+</html>
