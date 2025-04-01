@@ -5,7 +5,6 @@ from fastapi import Query
 from typing import Annotated
 from app.config import get_app_settings
 from fastapi.templating import Jinja2Templates
-from fastapi import HTTPException
 from fastapi.responses import HTMLResponse
 from app.database import Session
 from sqlmodel import select
@@ -13,7 +12,7 @@ from app.models import Episode
 
 settings = get_app_settings()
 templates = Jinja2Templates(directory=settings.templates_path / "player")
-static_path = settings.static_path / "movies"
+movies_path = settings.static_path / "movies"
 router = APIRouter()
 
 
@@ -26,16 +25,10 @@ def stream_video(
     query = select(Episode).where(Episode.id == q)
     result = session.exec(query)
     episode = result.one()
+    file_path = movies_path / f"{episode.name}.mp4"
+    assert file_path.exists(), f"File {file_path} does not exist"
 
     def iterfile(file_name: str):
-        # Ensure the file has .mp4 suffix
-        
-        # If file doesn't exist, fall back to sample.mp4
-        if not file_path.exists():
-            file_path = static_path / "movies" / "sample.mp4"
-            if not file_path.exists():
-                raise HTTPException(status_code=404, detail="Video file not found")
-
         with open(file_path, mode="rb") as file_like:
             yield from file_like
 
@@ -57,7 +50,7 @@ async def player(
         {
             "request": request,
             "video_file": q,
-            "next": episode.next,
-            "previous": episode.previous,
+            "next": episode.next.id if episode.next else None,
+            "previous": episode.previous.id if episode.previous else None,
         },
     )

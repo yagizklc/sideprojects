@@ -24,42 +24,42 @@ Session = Annotated[SQLModelSession, Depends(get_session)]
 def populate_db():
     with SQLModelSession(engine) as session:
         # add title
-        title = Title(name="Severance")
+        title = Title(name="Sample")
         session.add(title)
         session.commit()
         session.refresh(title)
         assert title.id is not None
 
         # add episodes
+        episode1 = Episode(
+            title_id=title.id,
+            name="sample_s1e1",
+        )
+        session.add(episode1)
+        session.commit()
+        session.refresh(episode1)
+
+        episode2 = Episode(
+            title_id=title.id,
+            name="sample_s1e2",
+            previous_id=episode1.id,
+        )
+        episode1.next = episode2
+        session.add(episode2)
+        session.commit()
+        session.refresh(episode2)
+        session.refresh(episode1)
+
         episode3 = Episode(
             title_id=title.id,
-            name="severances_s1e3",
+            name="sample_s1e3",
+            previous_id=episode2.id,
         )
+        episode2.next = episode3
         session.add(episode3)
         session.commit()
         session.refresh(episode3)
-
-        episode4 = Episode(
-            title_id=title.id,
-            name="severances_s1e4",
-            previous_id=episode3.id,
-        )
-        episode3.next = episode4
-        session.add(episode4)
-        session.commit()
-        session.refresh(episode4)
-        session.refresh(episode3)
-
-        episode5 = Episode(
-            title_id=title.id,
-            name="severances_s1e5",
-            previous_id=episode4.id,
-        )
-        episode4.next = episode5
-        session.add(episode5)
-        session.commit()
-        session.refresh(episode5)
-        session.refresh(episode4)
+        session.refresh(episode2)
 
         # add tags
         tag1 = Tag(name="drama")

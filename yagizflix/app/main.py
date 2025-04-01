@@ -8,7 +8,7 @@ from fastapi.templating import Jinja2Templates
 
 from app.config import get_app_settings
 from app.routers import player_router, titles_router
-from app.database import create_db_and_tables, populate_db
+from app.database import create_db_and_tables
 
 settings = get_app_settings()
 templates = Jinja2Templates(directory=settings.templates_path)
@@ -17,7 +17,7 @@ templates = Jinja2Templates(directory=settings.templates_path)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_db_and_tables()
-    populate_db()
+    # populate_db()
     yield
 
 
