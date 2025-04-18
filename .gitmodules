@@ -1,0 +1,15 @@
+[submodule "from-scratch-agents"]
+	path = from-scratch-agents
+	url = git@github.com:yagizklc/from-scratch-agents.git
+[submodule "from-scratch-backend"]
+	path = from-scratch-backend
+	url = git@github.com:yagizklc/from-scratch-backend.git
+[submodule "from-scratch-http-server-go"]
+	path = from-scratch-http-server-go
+	url = git@github.com:yagizklc/from-scratch-http-server-go.git
+[submodule "from-scratch-redis"]
+	path = from-scratch-redis
+	url = git@github.com:yagizklc/from-scratch-redis.git
+[submodule "sentiment-analysis-invzva"]
+	path = sentiment-analysis-invzva
+	url = git@github.com:yagizklc/inzva.git
